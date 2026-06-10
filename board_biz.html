@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onboarding — Análise de Dores | Biz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --biz-bg: #F7F6F2;
+    --biz-surface: #FFFFFF;
+    --biz-border: rgba(0,0,0,0.08);
+    --biz-border-strong: rgba(0,0,0,0.14);
+    --biz-ink: #1A1916;
+    --biz-ink-2: #5A5954;
+    --biz-ink-3: #9A9893;
+    --biz-accent: #1C5CFF;
+    --biz-accent-light: #EBF0FF;
+    --biz-red: #D63C2F;
+    --biz-red-light: #FEF0EF;
+    --biz-amber: #C97C10;
+    --biz-amber-light: #FEF5E6;
+    --biz-green: #1A7A4A;
+    --biz-green-light: #E8F6EE;
+    --biz-mono: 'DM Mono', monospace;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--biz-bg);
+    color: var(--biz-ink);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--biz-surface);
+    border-bottom: 1px solid var(--biz-border);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .logo {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    color: var(--biz-ink);
+  }
+  .logo span { color: var(--biz-accent); }
+  .header-divider {
+    width: 1px; height: 20px;
+    background: var(--biz-border-strong);
+  }
+  .header-title {
+    font-size: 13px;
+    color: var(--biz-ink-2);
+  }
+  .header-meta {
+    font-family: var(--biz-mono);
+    font-size: 11px;
+    color: var(--biz-ink-3);
+    background: var(--biz-bg);
+    padding: 4px 10px;
+    border-radius: 99px;
+  }
+
+  /* MAIN LAYOUT */
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 32px 64px;
+  }
+
+  /* SUMMARY ROW */
+  .summary-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .metric {
+    background: var(--biz-surface);
+    border: 1px solid var(--biz-border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+  }
+  .metric-label {
+    font-size: 11px;
+    font-family: var(--biz-mono);
+    color: var(--biz-ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .metric-value {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    color: var(--biz-ink);
+    line-height: 1;
+  }
+  .metric-sub {
+    font-size: 12px;
+    color: var(--biz-ink-3);
+    margin-top: 5px;
+  }
+
+  /* TABS */
+  .tabs-bar {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--biz-border);
+    padding-bottom: 0;
+  }
+  .tab-btn {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--biz-ink-3);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px 16px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    margin-bottom: -1px;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--biz-ink); }
+  .tab-btn.active {
+    color: var(--biz-ink);
+    border-bottom-color: var(--biz-accent);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-family: var(--biz-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--biz-ink-3);
+    margin-bottom: 16px;
+  }
+
+  /* BADGES */
+  .badge {
+    display: inline-block;
+    font-family: var(--biz-mono);
+    font-size: 10px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 99px;
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+  }
+  .badge-red { background: var(--biz-red-light); color: var(--biz-red); }
+  .badge-amber { background: var(--biz-amber-light); color: var(--biz-amber); }
+  .badge-blue { background: var(--biz-accent-light); color: var(--biz-accent); }
+  .badge-gray { background: #F0EFEA; color: var(--biz-ink-2); }
+
+  /* PROBLEM CARDS */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .prob-card {
+    background: var(--biz-surface);
+    border: 1px solid var(--biz-border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: box-shadow 0.15s;
+  }
+  .prob-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .prob-card.critical { border-left: 3px solid var(--biz-red); }
+  .prob-card.high { border-left: 3px solid var(--biz-amber); }
+  .prob-card.medium { border-left: 3px solid var(--biz-accent); }
+  .prob-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .prob-name { font-size: 14px; font-weight: 600; color: var(--biz-ink); }
+  .prob-count {
+    font-family: var(--biz-mono);
+    font-size: 11px;
+    color: var(--biz-ink-3);
+    margin-top: 3px;
+  }
+  .prob-body { font-size: 13px; color: var(--biz-ink-2); line-height: 1.65; }
+  .prob-quote {
+    font-size: 12px;
+    color: var(--biz-ink-3);
+    font-style: italic;
+    border-left: 2px solid var(--biz-border-strong);
+    padding-left: 10px;
+    line-height: 1.55;
+  }
+  .prod-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .prod-tag {
+    font-size: 11px;
+    font-family: var(--biz-mono);
+    padding: 3px 8px;
+    border-radius: 99px;
+    border: 1px solid var(--biz-border-strong);
+    color: var(--biz-ink-2);
+  }
+
+  /* PRODUCT VIEW */
+  .prod-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .prod-card {
+    background: var(--biz-surface);
+    border: 1px solid var(--biz-border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .prod-name { font-size: 14px; font-weight: 600; color: var(--biz-ink); }
+  .prod-desc { font-size: 13px; color: var(--biz-ink-2); line-height: 1.65; }
+  .prod-pills { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+  .prod-pill {
+    font-size: 11px;
+    font-family: var(--biz-mono);
+    padding: 3px 8px;
+    border-radius: 99px;
+    background: var(--biz-bg);
+    color: var(--biz-ink-2);
+    border: 1px solid var(--biz-border);
+  }
+
+  /* MATRIX */
+  .matrix-wrap { overflow-x: auto; }
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    background: var(--biz-surface);
+    border: 1px solid var(--biz-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .matrix-table th {
+    font-family: var(--biz-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--biz-ink-3);
+    padding: 12px 10px;
+    background: var(--biz-bg);
+    border-bottom: 1px solid var(--biz-border);
+    text-align: center;
+    white-space: nowrap;
+  }
+  .matrix-table th.row-head { text-align: left; min-width: 200px; }
+  .matrix-table td {
+    padding: 10px 10px;
+    border-bottom: 1px solid var(--biz-border);
+    text-align: center;
+    vertical-align: middle;
+  }
+  .matrix-table td.row-label {
+    text-align: left;
+    font-size: 13px;
+    color: var(--biz-ink);
+    padding-left: 16px;
+  }
+  .matrix-table tr:last-child td { border-bottom: none; }
+  .cell-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-family: var(--biz-mono);
+    padding: 2px 7px;
+    border-radius: 3px;
+  }
+  .cell-high { background: var(--biz-red-light); color: var(--biz-red); }
+  .cell-med { background: var(--biz-amber-light); color: var(--biz-amber); }
+  .cell-low { background: var(--biz-green-light); color: var(--biz-green); }
+  .cell-none { color: var(--biz-border-strong); font-size: 12px; }
+  .count-chip {
+    font-family: var(--biz-mono);
+    font-size: 10px;
+    color: var(--biz-ink-3);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* CAUSA RAIZ */
+  .root-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .root-card {
+    background: var(--biz-surface);
+    border: 1px solid var(--biz-border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+  }
+  .root-eyebrow {
+    font-family: var(--biz-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--biz-ink-3);
+    margin-bottom: 8px;
+  }
+  .root-title { font-size: 15px; font-weight: 600; color: var(--biz-ink); margin-bottom: 10px; }
+  .root-body { font-size: 13px; color: var(--biz-ink-2); line-height: 1.65; }
+  .root-stat {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--biz-border);
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .root-stat-number { font-size: 24px; font-weight: 600; letter-spacing: -0.5px; color: var(--biz-ink); }
+  .root-stat-label { font-size: 12px; color: var(--biz-ink-3); }
+
+  .insight-box {
+    background: var(--biz-accent-light);
+    border: 1px solid rgba(28,92,255,0.15);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    margin-top: 12px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .insight-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .insight-title { font-size: 13px; font-weight: 600; color: var(--biz-accent); margin-bottom: 5px; }
+  .insight-body { font-size: 13px; color: #2A3D8A; line-height: 1.6; }
+
+  /* BAR CHARTS (por área) */
+  .area-section { margin-bottom: 20px; }
+  .area-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px 14px;
+    background: var(--biz-surface);
+    border: 1px solid var(--biz-border);
+    border-radius: var(--radius-sm);
+  }
+  .area-name { font-size: 13px; font-weight: 600; color: var(--biz-ink); }
+  .area-total { font-family: var(--biz-mono); font-size: 11px; color: var(--biz-ink-3); }
+  .area-bars { padding-left: 8px; }
+  .abar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 7px;
+  }
+  .abar-label { font-size: 12px; color: var(--biz-ink-2); width: 190px; flex-shrink: 0; text-align: right; }
+  .abar-track {
+    flex: 1;
+    background: var(--biz-bg);
+    border-radius: 2px;
+    height: 18px;
+    overflow: hidden;
+  }
+  .abar-fill { height: 100%; border-radius: 2px; }
+  .abar-num { font-family: var(--biz-mono); font-size: 11px; color: var(--biz-ink-3); width: 28px; }
+
+  @media (max-width: 768px) {
+    .main { padding: 20px 16px 48px; }
+    .summary-row { grid-template-columns: repeat(2, 1fr); }
+    .problem-grid, .prod-grid, .root-grid { grid-template-columns: 1fr; }
+    .header { padding: 14px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <div class="logo">biz<span>.</span></div>
+    <div class="header-divider"></div>
+    <div class="header-title">Onboarding — Análise de Dores</div>
+  </div>
+  <div class="header-meta">Fev – Abr 2026 · 745 tickets</div>
+</header>
+
+<main class="main">
+
+  <!-- SUMMARY ROW -->
+  <div class="summary-row">
+    <div class="metric">
+      <div class="metric-label">Total de tickets</div>
+      <div class="metric-value">745</div>
+      <div class="metric-sub">Todas as áreas</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Atendidos pelo SAC</div>
+      <div class="metric-value">556</div>
+      <div class="metric-sub">74,6% do total</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Subcategorias</div>
+      <div class="metric-value">18</div>
+      <div class="metric-sub">Mapeadas no período</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Pico de volume</div>
+      <div class="metric-value">Mar/26</div>
+      <div class="metric-sub">357 tickets — 48%</div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <button class="tab-btn active" onclick="showTab('causaraiz', this)">Causa raiz</button>
+    <button class="tab-btn" onclick="showTab('problemas', this)">Por problema</button>
+    <button class="tab-btn" onclick="showTab('produto', this)">Por produto</button>
+    <button class="tab-btn" onclick="showTab('area', this)">Por área</button>
+    <button class="tab-btn" onclick="showTab('matriz', this)">Matriz de impacto</button>
+  </div>
+
+  <!-- TAB: PROBLEMAS -->
+  <div id="problemas" class="tab-panel">
+    <div class="section-label">Principais dores e onde impactam na jornada Biz</div>
+    <div class="problem-grid">
+
+      <div class="prob-card critical">
+        <div class="prob-header">
+          <div>
+            <div class="prob-name">Orientação + Informação</div>
+            <div class="prob-count">272 tickets · 36,5% do total</div>
+          </div>
+          <span class="badge badge-red">Crítico</span>
+        </div>
+        <div class="prob-body">Colaborador não sabe como iniciar o primeiro acesso, qual app baixar ou quais etapas seguir. Em vários casos houve confusão entre o app Biz e o B2U Benefícios. Problema de comunicação e UX, não técnico.</div>
+        <div class="prob-quote">"Estava com o app Biz instalado, mas foi orientada a instalar o B2U Benefícios. Mesmo assim, continuou com erro."</div>
+        <div class="prod-tags">
+          <span class="prod-tag">App (B2B2X)</span>
+        </div>
+      </div>
+
+      <div class="prob-card critical">
+        <div class="prob-header">
+          <div>
+            <div class="prob-name">Credenciais Inválidas</div>
+            <div class="prob-count">131 tickets · 17,6%</div>
+          </div>
+          <span class="badge badge-red">Crítico</span>
+        </div>
+        <div class="prob-body">CPF, data de nascimento ou senha não batem com o cadastro. Em muitos casos o dado foi inserido incorretamente pela empresa no Portal Multi — o colaborador não tem como corrigir sozinho. Tentativas esgotadas geram bloqueio automático.</div>
+        <div class="prob-quote">"Consta mensagem de 'tentativas excedidas' desde o dia anterior, quando a funcionária tentou pelo RH."</div>
+        <div class="prod-tags">
+          <span class="prod-tag">Portal Multi (B2B)</span>
+          <span class="prod-tag">App (B2B2X)</span>
+        </div>
+      </div>
+
+      <div class="prob-card critical">
+        <div class="prob-header">
+          <div>
+            <div class="prob-name">Não recebe token + SMS</div>
+            <div class="prob-count">107 tickets · 14,4%</div>
+          </div>
+          <span class="badge badge-red">Crítico</span>
+        </div>
+        <div class="prob-body">Token de validação não chega via SMS ou e-mail. Em alguns casos o número cadastrado está divergente do real; em outros o SMS vai para spam ou há falha no provedor. Bloqueia completamente o primeiro acesso.</div>
+        <div class="prob-quote">"Token não chega em nenhum canal — nem SMS nem e-mail — após múltiplas tentativas e reinstalação do app."</div>
+        <div class="prod-tags">
+          <span class="prod-tag">App (B2B2X)</span>
+        </div>
+      </div>
+
+      <div class="prob-card high">
+        <div class="prob-header">
+          <div>
+            <div class="prob-name">Não possui conta</div>
+            <div class="prob-count">58 tickets · 7,8%</div>
+          </div>
+          <span class="badge badge-amber">Alto</span>
+        </div>
+        <div class="prob-body">Colaborador instalou o app, mas o sistema informa que não existe conta. Indica falha no provisionamento: empresa cadastrou no Portal Multi, mas a conta digital não foi criada, ou colaborador recebeu o cartão antes da ativação da conta no app.</div>
+        <div class="prob-quote">"A empresa lhe forneceu o cartão, mas ao tentar acessar o app aparece que ela não possui conta."</div>
+        <div class="prod-tags">
+          <span class="prod-tag">Portal Multi — provisionamento</span>
+          <span class="prod-tag">App (B2B2X)</span>
+        </div>
+      </div>
+
+      <div class="prob-card critical">
+        <div class="prob-header">
+          <div>
+            <div class="prob-name">Erro Looping</div>
+            <div class="prob-count">40 tickets · 5,4%</div>
+          </div>
+          <span class="badge badge-red">Crítico — bug</span>
+        </div>
+        <div class="prob-body">App fica em loop de validação de token e nunca avança. O colaborador recebe o token, insere corretamente, e o sistema solicita um novo token indefinidamente. O workaround indicado pelo SAC (desinstalar/reinstalar) nem sempre resolve.</div>
+        <div class="prob-quote">"Portador insere o código, consta token inválido, tenta novamente, e o app gera repetidamente a solicitação de token."</div>
+        <div class="prod-tags">
+          <span class="prod-tag">App (B2B2X)</span>
+        </div>
+      </div>
+
+      <div class="prob-card high">
+        <div class="prob-header">
+          <div>
+            <div class="prob-name">Onboarding KYC</div>
+            <div class="prob-count">37 tickets · 5,0%</div>
+          </div>
+          <span class="badge badge-amber">Alto</span>
+        </div>
+        <div class="prob-body">Colaborador não conclui a validação de identidade: foto rejeitada, documento não aceito, e-mail divergente do pré-cadastro ou selfie com falha de reconhecimento. Em alguns casos o campo de e-mail estava preenchido parcialmente no sistema pela empresa.</div>
+        <div class="prob-quote">"Ao inserir o e-mail, aparece mensagem de divergência. O campo estava cadastrado apenas parcialmente no sistema."</div>
+        <div class="prod-tags">
+          <span class="prod-tag">App — fluxo KYC</span>
+          <span class="prod-tag">App B2B2X</span>
+        </div>
+      </div>
+
+      <div class="prob-card high">
+        <div class="prob-header">
+          <div>
+            <div class="prob-name">Token Inválido + Acesso Excedido</div>
+            <div class="prob-count">29 tickets · 3,9%</div>
+          </div>
+          <span class="badge badge-amber">Alto</span>
+        </div>
+        <div class="prob-body">Token recebido corretamente, mas recusado pelo sistema — possível expiração rápida ou dessincronismo no backend. Acesso excedido ocorre quando tentativas erradas superam o limite e a conta é bloqueada, obrigando abertura de chamado.</div>
+        <div class="prod-tags">
+          <span class="prod-tag">App (B2B2X)</span>
+        </div>
+      </div>
+
+      <div class="prob-card medium">
+        <div class="prob-header">
+          <div>
+            <div class="prob-name">Cadastro não Aprovado</div>
+            <div class="prob-count">18 tickets · 2,4%</div>
+          </div>
+          <span class="badge badge-blue">Moderado</span>
+        </div>
+        <div class="prob-body">Colaborador conclui o fluxo, mas o cadastro é reprovado (KYC, compliance ou dados inconsistentes). Não há feedback claro sobre o motivo, gerando múltiplos contatos ao SAC sem resolução na primeira chamada.</div>
+        <div class="prod-tags">
+          <span class="prod-tag">App — fluxo KYC/compliance</span>
+          <span class="prod-tag">Prevenção à Fraude</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TAB: PRODUTO -->
+  <div id="produto" class="tab-panel">
+    <div class="section-label">Quais produtos são mais afetados</div>
+    <div class="prod-grid">
+      <div class="prod-card" style="border-left: 3px solid var(--biz-red);">
+        <div class="prod-header" style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div class="prod-name">App Biz (B2B2X) — canal de onboarding</div>
+          <span class="badge badge-red">Impacto máximo</span>
+        </div>
+        <div class="prod-desc">Ponto de falha central. Praticamente todas as dores se manifestam aqui: loop de token, credenciais recusadas, KYC falho, ausência de conta e confusão de qual app usar. O colaborador só ativa os produtos Biz via app — qualquer fricção nesse canal bloqueia toda a cadeia.</div>
+        <div class="prod-pills">
+          <span class="prod-pill">Erro Looping · 40</span>
+          <span class="prod-pill">Credenciais · 131</span>
+          <span class="prod-pill">Não recebe token · 107</span>
+          <span class="prod-pill">Token inválido · 27</span>
+          <span class="prod-pill">KYC · 37</span>
+        </div>
+      </div>
+      <div class="prod-card" style="border-left: 3px solid var(--biz-amber);">
+        <div class="prod-header" style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div class="prod-name">Portal Multi (B2B) — origem dos dados</div>
+          <span class="badge badge-amber">Impacto alto</span>
+        </div>
+        <div class="prod-desc">Problemas que chegam ao colaborador têm origem no cadastro feito pela empresa: dados divergentes (CPF, data de nascimento, e-mail parcial), conta não provisionada e colaborador com cartão antes da conta digital ativa. Falha aqui contamina toda a jornada downstream.</div>
+        <div class="prod-pills">
+          <span class="prod-pill">Não possui conta · 58</span>
+          <span class="prod-pill">Credenciais Inválidas · 131</span>
+          <span class="prod-pill">KYC divergente · parte dos 37</span>
+        </div>
+      </div>
+      <div class="prod-card" style="border-left: 3px solid var(--biz-amber);">
+        <div class="prod-header" style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div class="prod-name">MultiBenefícios</div>
+          <span class="badge badge-amber">Impacto alto</span>
+        </div>
+        <div class="prod-desc">Produto mais citado nos tickets como contexto do cartão de benefícios (alimentação, refeição, transporte). Colaboradores de diversas empresas relatam dificuldade para ativar o app e desbloquear o cartão de benefício — o problema está no canal de ativação, não na lógica de saldo.</div>
+      </div>
+      <div class="prod-card" style="border-left: 3px solid var(--biz-accent);">
+        <div class="prod-header" style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div class="prod-name">MultiSalário</div>
+          <span class="badge badge-blue">Impacto moderado</span>
+        </div>
+        <div class="prod-desc">Mencionado em contextos de conta digital e Pix. O fluxo de onboarding é compartilhado com o app — as mesmas dores de token e credenciais afetam o acesso à conta salário.</div>
+      </div>
+      <div class="prod-card" style="border-left: 3px solid var(--biz-border-strong);">
+        <div class="prod-header" style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div class="prod-name">MultiCrédito · MultiDespesas · MultiPremiação</div>
+          <span class="badge badge-gray">Impacto indireto</span>
+        </div>
+        <div class="prod-desc">Menos citados diretamente, mas dependem do mesmo fluxo. Se o colaborador não consegue criar conta no app, esses produtos ficam inacessíveis. Tickets de KYC reprovado podem estar relacionados a produtos que exigem análise de crédito.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: ÁREA -->
+  <div id="area" class="tab-panel">
+    <div class="section-label">Top subcategorias por pipeline</div>
+
+    <div class="area-section">
+      <div class="area-header">
+        <span class="area-name">SAC — Central de atendimento</span>
+        <span class="area-total">556 tickets · 74,6%</span>
+      </div>
+      <div class="area-bars" id="bars-sac"></div>
+    </div>
+
+    <div class="area-section">
+      <div class="area-header">
+        <span class="area-name">N2 Support</span>
+        <span class="area-total">117 tickets</span>
+      </div>
+      <div class="area-bars" id="bars-n2"></div>
+    </div>
+
+    <div class="area-section">
+      <div class="area-header">
+        <span class="area-name">N1 / BCC</span>
+        <span class="area-total">50 tickets</span>
+      </div>
+      <div class="area-bars" id="bars-n1"></div>
+    </div>
+
+    <div class="area-section">
+      <div class="area-header">
+        <span class="area-name">Prevenção à Fraude</span>
+        <span class="area-total">16 tickets</span>
+      </div>
+      <div class="area-bars" id="bars-fraude"></div>
+    </div>
+  </div>
+
+  <!-- TAB: MATRIZ -->
+  <div id="matriz" class="tab-panel">
+    <div class="section-label">Intensidade do impacto — problema × produto</div>
+    <div class="matrix-wrap">
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th class="row-head">Problema</th>
+            <th>App (B2B2X)</th>
+            <th>Portal Multi</th>
+            <th>MultiBenef.</th>
+            <th>MultiSalário</th>
+            <th>MultiCrédito</th>
+            <th>MultiPremiação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="row-label">Orientação / Informação <span class="count-chip">272 tickets</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-tag cell-med">Médio</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-tag cell-med">Médio</span></td>
+            <td><span class="cell-tag cell-low">Baixo</span></td>
+            <td><span class="cell-tag cell-low">Baixo</span></td>
+          </tr>
+          <tr>
+            <td class="row-label">Credenciais Inválidas <span class="count-chip">131 tickets</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-tag cell-med">Médio</span></td>
+            <td><span class="cell-tag cell-low">Baixo</span></td>
+          </tr>
+          <tr>
+            <td class="row-label">Não recebe token / SMS <span class="count-chip">107 tickets</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-none">—</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-tag cell-low">Baixo</span></td>
+            <td><span class="cell-tag cell-med">Médio</span></td>
+          </tr>
+          <tr>
+            <td class="row-label">Não possui conta <span class="count-chip">58 tickets</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-none">—</span></td>
+            <td><span class="cell-none">—</span></td>
+          </tr>
+          <tr>
+            <td class="row-label">Erro Looping <span class="count-chip">40 tickets</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-none">—</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-tag cell-med">Médio</span></td>
+            <td><span class="cell-none">—</span></td>
+            <td><span class="cell-none">—</span></td>
+          </tr>
+          <tr>
+            <td class="row-label">Onboarding KYC <span class="count-chip">37 tickets</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-tag cell-med">Médio</span></td>
+            <td><span class="cell-tag cell-med">Médio</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-none">—</span></td>
+          </tr>
+          <tr>
+            <td class="row-label">Token Inválido / Excedido <span class="count-chip">29 tickets</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-none">—</span></td>
+            <td><span class="cell-tag cell-med">Médio</span></td>
+            <td><span class="cell-tag cell-med">Médio</span></td>
+            <td><span class="cell-none">—</span></td>
+            <td><span class="cell-none">—</span></td>
+          </tr>
+          <tr>
+            <td class="row-label">Cadastro não Aprovado <span class="count-chip">18 tickets</span></td>
+            <td><span class="cell-tag cell-med">Médio</span></td>
+            <td><span class="cell-tag cell-low">Baixo</span></td>
+            <td><span class="cell-tag cell-med">Médio</span></td>
+            <td><span class="cell-tag cell-low">Baixo</span></td>
+            <td><span class="cell-tag cell-high">Alto</span></td>
+            <td><span class="cell-none">—</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TAB: CAUSA RAIZ -->
+  <div id="causaraiz" class="tab-panel active">
+    <div class="section-label">Agrupamento por causa raiz — onde atuar</div>
+    <div class="root-grid">
+      <div class="root-card">
+        <div class="root-eyebrow">Causa 01</div>
+        <div class="root-title">Gap de UX e comunicação</div>
+        <div class="root-body">Colaborador não sabe o que fazer. O produto não guia o usuário com clareza suficiente — qual app baixar, como preencher cada campo, o que significa cada mensagem de erro. O SAC faz o papel que um bom onboarding in-app deveria fazer.</div>
+        <div class="root-stat">
+          <span class="root-stat-number">36%</span>
+          <span class="root-stat-label">272 tickets · Orientação + Informação</span>
+        </div>
+      </div>
+      <div class="root-card">
+        <div class="root-eyebrow">Causa 02</div>
+        <div class="root-title">Qualidade do cadastro B2B</div>
+        <div class="root-body">A empresa cadastra dados errados no Portal Multi e o colaborador arca com o bloqueio. O ponto de correção está no portal da empresa, mas quem liga é o colaborador — criando um triângulo de frustração: colaborador → SAC → empresa → correção.</div>
+        <div class="root-stat">
+          <span class="root-stat-number">29%</span>
+          <span class="root-stat-label">~220 tickets · Credenciais + Sem conta + KYC</span>
+        </div>
+      </div>
+      <div class="root-card">
+        <div class="root-eyebrow">Causa 03</div>
+        <div class="root-title">Falha de entrega de token</div>
+        <div class="root-body">Token não chega via SMS ou e-mail, chega com atraso, vai para spam, ou é aceito pelo usuário mas rejeitado pelo backend. O provedor de SMS é um ponto de falha externo, mas o timeout curto e a falta de fallback (ex: e-mail como alternativa automática) amplificam o problema.</div>
+        <div class="root-stat">
+          <span class="root-stat-number">18%</span>
+          <span class="root-stat-label">134 tickets · Token + SMS + Token Inválido</span>
+        </div>
+      </div>
+      <div class="root-card">
+        <div class="root-eyebrow">Causa 04</div>
+        <div class="root-title">Bug de fluxo no app</div>
+        <div class="root-body">Erro de looping que nunca avança após inserir o token. Botão "continuar" que não aparece. Tela que trava ao inserir CPF. Comportamento consistente nos relatos — não é intermitente — e o workaround de reinstalar o app não resolve de forma confiável.</div>
+        <div class="root-stat">
+          <span class="root-stat-number">~8%</span>
+          <span class="root-stat-label">~60 tickets · Erro Looping + Problemas primeiro acesso</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-icon">💡</div>
+      <div>
+        <div class="insight-title">Padrão relevante: o SAC como "analgésico"</div>
+        <div class="insight-body">74% dos tickets são do SAC. Em grande parte, o atendente orienta o colaborador com workaround manual quando o problema deveria ser resolvido no produto — tutorial no app, validação prévia no Portal Multi, ou mensagem de erro mais clara. Atacar apenas o app sem melhorar a qualidade do cadastro no portal vai resolver menos da metade dos tickets.</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+const COLOR_MAP = {
+  'Orientação': '#1C5CFF',
+  'Credenciais Inválidas': '#D63C2F',
+  'Informação': '#1C5CFF',
+  'Não recebe token': '#1A7A4A',
+  'Não possui conta': '#9B4EA5',
+  'Onboarding KYC': '#9B4EA5',
+  'Erro Looping': '#D63C2F',
+  'Token Inválido': '#1A7A4A',
+  'Cadastro não Aprovado': '#9B4EA5',
+  'Problemas primeiro acesso': '#888780',
+  'Sem detalhamento': '#888780',
+  'Não recebe SMS': '#1A7A4A',
+  'Acesso excedido': '#D63C2F',
+  'Reclamação': '#888780',
+};
+
+function renderBars(containerId, items) {
+  const max = items[0][1];
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = items.map(([label, n]) => {
+    const w = Math.round(n / max * 100);
+    const color = COLOR_MAP[label] || '#888780';
+    return `<div class="abar-row">
+      <div class="abar-label">${label}</div>
+      <div class="abar-track"><div class="abar-fill" style="width:${w}%;background:${color}22;border-left:2px solid ${color}"></div></div>
+      <div class="abar-num">${n}</div>
+    </div>`;
+  }).join('');
+}
+
+renderBars('bars-sac', [
+  ['Orientação', 183], ['Credenciais Inválidas', 87], ['Informação', 74],
+  ['Não recebe token', 65], ['Não possui conta', 42], ['Onboarding KYC', 30],
+  ['Erro Looping', 26], ['Token Inválido', 19], ['Cadastro não Aprovado', 17]
+]);
+renderBars('bars-n2', [
+  ['Credenciais Inválidas', 33], ['Não recebe token', 32], ['Não possui conta', 13],
+  ['Erro Looping', 11], ['Token Inválido', 8], ['Informação', 4],
+  ['Onboarding KYC', 4]
+]);
+renderBars('bars-n1', [
+  ['Problemas primeiro acesso', 15], ['Credenciais Inválidas', 9],
+  ['Não recebe token', 6], ['Informação', 5], ['Não possui conta', 3], ['Não recebe SMS', 3]
+]);
+renderBars('bars-fraude', [
+  ['Problemas primeiro acesso', 5], ['Acesso excedido', 2],
+  ['Onboarding KYC', 2], ['Acesso expirado', 1], ['Credenciais Inválidas', 1]
+]);
+</script>
+</body>
+</html>
